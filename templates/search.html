@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Products</title>
+    <style>
+        body { font-family: {{ theme.font }}; background: {{ theme.bg }}; color: {{ theme.text }}; margin: 0; padding: 30px; }
+        .container { max-width: 700px; margin: auto; background: {{ theme.container }}; padding: 30px; border-radius: 10px; border: 1px solid {{ theme.border }}; }
+        input[type="text"] { width: 70%; padding: 12px; font-size: 16px; border: 1px solid {{ theme.border }}; border-radius: 6px; }
+        button { padding: 12px 24px; background: {{ theme.btn_bg }}; color: {{ theme.btn_text }}; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+        button:hover { opacity: 0.9; }
+        #results { margin-top: 25px; }
+        .product { padding: 12px; border-bottom: 1px solid {{ theme.border }}; }
+    </style>
+    <script>
+        function search() {
+            const query = document.getElementById('query').value;
+            fetch('/search', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `query=${encodeURIComponent(query)}`
+            })
+            .then(r => r.json())
+            .then(data => {
+                const div = document.getElementById('results');
+                div.innerHTML = '';
+                if (data.products.length === 0) {
+                    div.innerHTML = '<p>No products found.</p>';
+                } else {
+                    data.products.forEach(p => {
+                        div.innerHTML += `<div class="product"><strong>${p.name}</strong> — $${p.price.toFixed(2)} (${p.category || '—'})</div>`;
+                    });
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Search Products</h2>
+        <input type="text" id="query" placeholder="Enter name or category...">
+        <button onclick="search()">Search</button>
+        <div id="results"></div>
+        <p><a href="/">← Back to Home</a></p>
+    </div>
+</body>
+</html>
