@@ -12,10 +12,15 @@
     </theme>
     
     <!-- Optional: put DB settings here if you prefer XML over .ini -->
-    <database enabled="true">
+    <!-- <database enabled="true">
         <host>localhost</host>
         <dbname>groceries</dbname>
         <user>admin</user>
         <password>TXJXb2JiaW5z</password>
-    </database>
+    </database> -->
+
+    <security>
+        <admin_username>admin</admin_username>
+        <admin_password>TXJXb2JiaW5z</admin_password>
+    </security>
 </app>
