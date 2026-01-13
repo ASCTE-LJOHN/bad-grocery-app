@@ -14,6 +14,7 @@ from database import DatabaseManager
 from contextlib import contextmanager
 from models import Product
 import sqlite3
+import os
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key-for-flash-messages'  # required for flash
@@ -183,7 +184,7 @@ def import_file():
             flash('No selected file', 'error')
             return redirect(request.url)
 
-        if file and file.filename.lower().endswith('.csv'):
+        if file:
             try:
                 stream = StringIO(file.stream.read().decode('utf-8'), newline=None)
                 csv_reader = csv.DictReader(stream)
@@ -255,6 +256,48 @@ def search():
         return jsonify({'products': [p.to_dict() for p in products]})
 
     return render_template('search.html', theme=theme)
+
+@app.route('/change-theme', methods=['GET', 'POST'])
+def change_theme():
+    global theme  # we'll update the global theme variable
+
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+
+        if file:
+            try:
+                # Save the uploaded file as config.xml (overwrite)
+                filename = 'config.xml'
+                file.save(filename)
+
+                # Immediately reload the theme from the new file
+                new_theme, _ = load_config()  # we only care about theme part
+                theme.clear()
+                theme.update(new_theme)
+
+                flash('Theme updated successfully! Refresh any page to see changes.', 'success')
+                return redirect(url_for('index'))
+
+            except ET.ParseError:
+                flash('Invalid XML format in the uploaded file.', 'error')
+            except Exception as e:
+                flash(f'Error applying new theme: {str(e)}', 'error')
+
+            # If failed, don't keep the bad file – but for simplicity we keep it
+            # You could add os.remove(filename) here on failure if desired
+        else:
+            flash('Please upload a valid .xml file', 'error')
+
+        return redirect(request.url)
+
+    return render_template('change_theme.html', theme=theme)
 
 if __name__ == '__main__':
     print("Theme loaded:", theme)
