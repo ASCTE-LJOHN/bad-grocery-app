@@ -11,11 +11,11 @@
         <font_family>Segoe UI, Arial, sans-serif</font_family>
     </theme>
     
-    <!-- Optional: you can also put DB settings here if you prefer XML over .ini -->
-    <database enabled="false">
+    <!-- Optional: put DB settings here if you prefer XML over .ini -->
+    <database enabled="true">
         <host>localhost</host>
         <dbname>grocery_db</dbname>
-        <user>postgres</user>
-        <password>your_password</password>
+        <user>admin</user>
+        <password>TXJXb2JiaW5z</password>
     </database>
 </app>
