@@ -71,7 +71,6 @@ jobs:
           cmd_options: >
             -l WARN
             -j
-            -U admin
             -z "-config authentication.methodName=formBasedAuthentication
                 -config authentication.form.loginUrl=http://127.0.0.1:5000/login
                 -config authentication.form.loginRequestData=username=admin&password=TXJXb2JiaW5z"
