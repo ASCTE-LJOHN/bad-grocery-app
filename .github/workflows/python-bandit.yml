@@ -27,8 +27,9 @@ jobs:
       - name: Run Bandit (full report)
         continue-on-error: true
         run: |
-          bandit -r . -f txt -lll
-        # bandit -r . -f json -o bandit-report.json -lll
+          bandit -r . -f json -o bandit-report.json -lll
+        # bandit -r . -f txt -lll -v
+        
 
       # - name: Upload Bandit report
       #   uses: actions/upload-artifact@v4
