@@ -100,4 +100,4 @@ jobs:
       
       - name: Ochrona Dependency Scan
         run: |
-          ochrona --dir . --enable-sast True
+          ochrona --dir . --enable_sast True
