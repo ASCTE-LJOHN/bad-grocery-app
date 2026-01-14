@@ -61,7 +61,7 @@ jobs:
           sleep 2
   
       - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.11.0
+        uses: zaproxy/action-full-scan@v0.13.0
         with:
           target: http://127.0.0.1:5000
           fail_action: false
@@ -71,18 +71,14 @@ jobs:
           cmd_options: >
             -l WARN
             -j
+            -U admin
             -z "-config authentication.methodName=formBasedAuthentication
                 -config authentication.form.loginUrl=http://127.0.0.1:5000/login
-                -config authentication.form.loginRequestData=username=${ZAP_USERNAME}&password=${ZAP_PASSWORD}
-                -config users.users.1.name=zapuser
-                -config users.users.1.credentialsId=1
-                -config users.users.1.enabled=true
-                -config forcedUser.userId=1
-                -config forcedUser.enabled=true"
+                -config authentication.form.loginRequestData=username=admin&password=TXJXb2JiaW5z"
   
-      - name: Upload ZAP report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: zap-report-${{ github.ref_name }}
-          path: ${{ github.workspace }}/zap.html
+      # - name: Upload ZAP report
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: zap-report-${{ github.ref_name }}
+      #     path: ${{ github.workspace }}/zap.html
