@@ -15,3 +15,14 @@ jobs:
     steps:
       - name: Perform Bandit Analysis
         uses: PyCQA/bandit-action@v1
+        with:
+          args: >
+            -r .
+            -f txt
+            -o bandit-report.json
+            -lll
+      - name: Upload Bandit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report-${{ github.ref_name }}
+          path: bandit-report.json
