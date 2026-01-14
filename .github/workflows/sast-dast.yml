@@ -52,7 +52,10 @@ jobs:
       - name: Install app dependencies
         run: |
           pip install -r requirements.txt
-  
+      
+      - name: Make /zap/wrk writable
+        run: sudo chmod -R 777 /zap/wrk
+
       - name: Start Flask app
         run: |
           export FLASK_ENV=development
