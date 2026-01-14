@@ -66,11 +66,11 @@ jobs:
           target: http://127.0.0.1:5000
           fail_action: false
           allow_issue_writing: false
-          cmd_options: "-l INFO -r zap.html -j -d"
+          cmd_options: "-l INFO -r ${{ github.workspace }}/zap.html -j -d"
   
       - name: Upload ZAP report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: zap-report-${{ github.ref_name }}
-          path: zap*.html
+          path: ${{ github.workspace }}/zap.html
