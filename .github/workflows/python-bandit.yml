@@ -25,7 +25,7 @@ jobs:
           pip install --upgrade bandit
 
       - name: Run Bandit (full report)
-        continue-on-error: true
+        # continue-on-error: true
         # https://bandit.readthedocs.io/en/latest/man/bandit.html#options
         run: |
           bandit --recursive . --format txt --verbose
