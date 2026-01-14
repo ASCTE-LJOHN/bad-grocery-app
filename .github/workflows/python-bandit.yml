@@ -26,8 +26,9 @@ jobs:
 
       - name: Run Bandit (full report)
         continue-on-error: true
+        # https://bandit.readthedocs.io/en/latest/man/bandit.html#options
         run: |
-          bandit -r . -f txt -lll -v
+          bandit --recursive . -format txt –severity-level=all -confidence-level=all --verbose
         # bandit -r . -f json -o bandit-report.json -lll
 
       # - name: Upload Bandit report
