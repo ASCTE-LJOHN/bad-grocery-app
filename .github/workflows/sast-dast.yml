@@ -68,18 +68,17 @@ jobs:
           allow_issue_writing: false
           # artifact_name: "zap_report_${{ github.ref_name }}"
           # cmd_options: "-l WARN -r /github/workspace/zap.html -j"
-          cmd_options: > 
-            -l WARN 
-            -j 
-            --config authentication.methodName=formBasedAuthentication
-            --config authentication.form.loginUrl=http://127.0.0.1:5000/login
-            --config authentication.form.loginRequestData=username=admin&password=TXJXb2JiaW5z
-            --config users.users.1.name=zapuser
-            --config users.users.1.credentialsId=1
-            --config users.users.1.enabled=true
-            --config forcedUser.userId=1
-            --config forcedUser.enabled=true
-
+          cmd_options: >
+            -l WARN
+            -j
+            -z "-config authentication.methodName=formBasedAuthentication
+                -config authentication.form.loginUrl=http://127.0.0.1:5000/login
+                -config authentication.form.loginRequestData=username=${ZAP_USERNAME}&password=${ZAP_PASSWORD}
+                -config users.users.1.name=zapuser
+                -config users.users.1.credentialsId=1
+                -config users.users.1.enabled=true
+                -config forcedUser.userId=1
+                -config forcedUser.enabled=true"
   
       - name: Upload ZAP report
         if: always()
