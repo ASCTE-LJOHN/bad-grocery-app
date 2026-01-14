@@ -29,10 +29,9 @@ jobs:
         run: |
           bandit -r . -f json -o bandit-report.json -lll
         # bandit -r . -f txt -lll -v
-        
 
-      # - name: Upload Bandit report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: bandit-report-${{ github.ref_name }}
-      #     path: bandit-report.json
+      - name: Upload Bandit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report-${{ github.ref_name }}
+          path: bandit-report.json
