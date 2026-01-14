@@ -37,7 +37,7 @@ jobs:
       #     name: bandit-report-${{ github.ref_name }}
       #     path: bandit-report.json
       
-  dast:
+  owasp-zap:
     runs-on: ubuntu-latest
   
     steps:
@@ -81,3 +81,23 @@ jobs:
       #   with:
       #     name: zap-report-${{ github.ref_name }}
       #     path: ${{ github.workspace }}/zap.html
+  ochrona:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+  
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+  
+      - name: Install app dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade ochrona
+      
+      - name: Ochrona Dependency Scan
+        run: |
+          ochrona --dir . --enable-sast True
