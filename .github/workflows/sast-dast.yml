@@ -66,7 +66,8 @@ jobs:
           target: http://127.0.0.1:5000
           fail_action: false
           allow_issue_writing: false
-          cmd_options: "-l WARN -r /github/workspace/zap.html -j"
+          artifact_name: "zap-report-${{ github.ref_name }}"
+          # cmd_options: "-l WARN -r /github/workspace/zap.html -j"
   
       - name: Upload ZAP report
         if: always()
